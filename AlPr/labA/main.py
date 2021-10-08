@@ -71,7 +71,7 @@ while True:
 #  0            |           |Error: Not a natural number entered |
 #  -888         |           |Error: Not a natural number entered |
 #  ABC          |           |Error: Invalid input detected       |
-#  2147483699   |           |Error: Invalid input detected       |
+#  2147483699   | 9         |21474836                            |
 #  1            | abcd      |Error: Invalid input detected       |
 #  1            | -3        |Error: Entered value is not a digit |
 #  1            | 99        |Error: Entered value is not a digit |
