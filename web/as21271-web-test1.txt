@@ -1,0 +1,83 @@
+1. Originally HTML language was created for both displaying and styling content. Nowadays HTML defines the content of a page, but CSS handles the presentation of it, therefore attributes used for styling have been removed.
+Disadvantages - 
+  1) difficult to read, one would have to read through html code to find styling
+  2) harder to maintain, every tag needs to be styled individually while CSS can be structured and multiple tags styled with one CSS block
+-------------------------------
+2. target="_blank"
+-------------------------------
+3.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .item {
+      align-self: flex-end;
+      padding-right: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <img src="https://dummyimage.com/300x200/000/fff" alt="dummy img">
+    <div class="container">
+      <label class="item" for="group">What of the following are front-end technologies?</label>
+      <select size="5" id="group" name="languages" multiple>
+        <option value="js">JavaScript</option>
+        <option value="php">PHP</option>
+        <option value="html">HTML</option>
+        <option value="py">Python</option>
+        <option value="css">CSS</option>
+      </select>
+    </div>
+    <a href="http://example.com">More information</a>
+  </div>
+</body>
+
+</html>
+-------------------------------
+4.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .display-block {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="http://example/webtech/test1/index.html" method="post">
+    <label class="display-block" for="fname">First name:</label>
+    <input class="display-block" type="text" id="fname" name="fname" value="John">
+    <label class="display-block" for="lname">Last name:</label>
+    <input class="display-block" type="text" id="lname" name="lname" value="Doe">
+    <label class="display-block" for="group">Please select gender:</label>
+    <select class="display-block" id="group" name="gender">
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <label for="pass">Password (2 characters minimum):</label>
+    <input class="display-block" type="password" id="pass" name="password" minlength="2" required>
+    <input class="display-block" type="submit" value="Submit">
+  </form>
+</body>
+
+</html>
