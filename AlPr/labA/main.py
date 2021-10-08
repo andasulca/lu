@@ -9,45 +9,56 @@
 
 while True:
     k = None
+    #loop until valid n is entered
     try:
+        #Check for a valid input - 'is number entered?'
         n = int(input("Enter number: "))
     except ValueError:
         print("Error: Invalid input detected")
         continue
+    #checks for a natural number
     if n <= 0:
         print("Error: Not a natural number entered")
         continue
 
+    #loop until valid k is entered
     while True:
         try:
+            #Check for a valid input - 'is number entered?'
             k = int(input("Enter digit to remove: "))
         except ValueError:
             print("Error: Invalid input detected")
             continue
+        #checks for a valid digit
         if k < 0 or k > 9:
             print("Error: Entered value is not a digit")
         else:
             break
     
-    mutable_n = abs(n)
-    result = 0
+    temp = abs(n)
     power = 0
+    m = 0
 
-    while mutable_n != 0:
-        number = mutable_n % 10
+    while temp != 0:
+        #Find the rightmost digit in the number
+        number = temp % 10
+        #checks if the found digit should be removed
         if (number != k):
-            result += number * 10**power
+            #adds digit to m
+            m += number * 10**power
+            #increases power to be used for next iteration of the loop
             power += 1
-        
-        mutable_n //= 10
+        #remove the rightmost digit from number using division
+        temp //= 10
 
     if n < 0:
-        result *= -1
+        m *= -1
 
-    if result == 0:
+    #Output m unless all the digits are removed
+    if m == 0:
         print("Result: All digits have been removed")
     else:
-        print("Removing ",k," from ",n,"\nResult: ", result)
+        print("Removing ",k," from ",n,"\nResult: ", m)
 
     ok = input("Enter 1 to continue. Enter any other character to exit. ")
 
