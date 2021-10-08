@@ -1,10 +1,10 @@
-# /***************
+#--------------------------
 
 # Anda Šulca, as21271
 
 # A5. Given natural number n and k, representing a digit 0..9. Create and print another number m, which is obtained by removing all digits k from n. (E.g., n=12025, k=2 -> m=105). Splitting into digits should be performed numerically.
 
-# ***************/
+#--------------------------
 
 
 while True:
@@ -65,20 +65,18 @@ while True:
     if ok != '1':
         break
 
-# /************
-#  *
-#  * Input number |Input digit| Desired response Result            | Actual response
-#  * -------------+-----------+------------------------------------+----------------------------------
-#  * 0            |           |Error: Not a natural number entered |
-#  * -888         |           |Error: Not a natural number entered |
-#  * ABC          |           |Error: Invalid input detected       |
-#  * 2147483699   |           |Error: Invalid input detected       |
-#  * 1            | abcd      |Error: Invalid input detected       |
-#  * 1            | -3        |Error: Entered value is not a digit |
-#  * 1            | 99        |Error: Entered value is not a digit |
-#  * 11122233     | 2         |Result: 111333                      |
-#  * 2147483647   | 3         |Result: 214748647                   |
-#  * 100          | 0         |Result: 1                           |
-#  * 00001        | 9         |Result: 1                           |
-#  * 10000        | 1         |Result: All digits have been removed|
-#  * ***********/
+
+#  Input number |Input digit| Desired response Result            | Actual response
+#  -------------+-----------+------------------------------------+----------------------------------
+#  0            |           |Error: Not a natural number entered |
+#  -888         |           |Error: Not a natural number entered |
+#  ABC          |           |Error: Invalid input detected       |
+#  2147483699   |           |Error: Invalid input detected       |
+#  1            | abcd      |Error: Invalid input detected       |
+#  1            | -3        |Error: Entered value is not a digit |
+#  1            | 99        |Error: Entered value is not a digit |
+#  11122233     | 2         |Result: 111333                      |
+#  2147483647   | 3         |Result: 214748647                   |
+#  100          | 0         |Result: 1                           |
+#  00001        | 9         |Result: 1                           |
+#  10000        | 1         |Result: All digits have been removed|
