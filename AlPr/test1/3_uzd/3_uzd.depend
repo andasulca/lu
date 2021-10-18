@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1634574848 source:c:\users\anda.sulca\desktop\1st-test\3_uzd\main.cpp
+	<cstring>
+	<iostream>
+	<stdlib.h>
+
