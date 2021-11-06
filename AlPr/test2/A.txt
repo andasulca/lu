@@ -1,0 +1,15 @@
+  Break operator causes the enclosing for, while or do-while loop or
+switch statement to terminate. Used when it is otherwise awkward to
+terminate the loop using the condition expression and conditional
+statements.
+  The syntax of a break statement in C++ is − break; The break
+statement has two separate and distinct uses: exiting a loop, and
+exiting a switch statement. You cannot use a break anywhere but inside
+a loop or a switch statement. After this statement the control is
+transferred to the statement or declaration immediately following the
+enclosing loop or switch.
+  A break statement cannot be used to break out of multiple nested
+loops, the goto statement may be used for this purpose. If you are
+using nested loops, the break statement will stop the execution of the
+innermost loop and start executing the next line of code after the
+block.
