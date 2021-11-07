@@ -1,0 +1,56 @@
+#--------------------------
+
+#Anda Sulca, as21271
+
+#B4: Calculate whether the given natural number contains repeating digits. Print all such digits and the number of occurrences of each of them. Splitting into digits should be carried out numerically.
+
+#--------------------------
+
+while True:
+    
+    #loop until valid n is entered
+    try:
+        #Check for a valid input - 'is number entered?'
+        n = int(input("Enter number: "))
+    except ValueError:
+        print("Error: Invalid input detected")
+        continue
+    #checks for a natural number
+    if n <= 0:
+        print("Error: Not a natural number entered")
+        continue
+
+   
+    masivs = [0,0,0,0,0,0,0,0,0,0]
+
+    while n != 0:
+        digit = n % 10
+        masivs[digit] = masivs[digit] + 1
+        n//=10
+       
+    isRepeating = False    
+    for i in range(10):    
+    #for i in masivs:
+        if masivs[i] > 1:
+            print("Repeating number: ",i,"; Occurences:",masivs[i],";")
+            isRepeating = True
+    
+    if isRepeating == False:  
+        print("No repeating numbers found")
+
+    ok = input("Enter 1 to continue. Enter any other character to exit. ")
+
+    if ok != '1':
+        break
+
+# Input number | Desired response Result                                                                              | Actual response
+# -------------+------------------------------------------------------------------------------------------------------+----------------------------------
+# 0            |Error: Not a natural number entered                                                                   |
+# -888         |Error: Not a natural number entered                                                                   |
+# ABC          |Error: Invalid input detected                                                                         |
+# 1            |No repeating number                                                                                   |
+# 00001        |No repeating number                                                                                   |
+# 11122233     |Repeating number: 1; Occurences:3;Repeating number: 2; Occurences:3;Repeating number: 3; Occurences:2;|
+# 2147483647   |Repeating number: 4; Occurences:3;Repeating number: 7; Occurences:2;                                  |
+# 100          |Repeating number: 0; Occurences:2;                                                                    |
+# 10000        |Repeating number: 0; Occurences:4;                                                                    |

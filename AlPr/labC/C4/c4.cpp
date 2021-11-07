@@ -22,13 +22,15 @@ int main()
     bool validInput = false;
 
     while(repeat) {
+        std::cin.clear();
+        std::cin.sync();
+        std::cout << "Enter numbers: " << std::endl;
         ///////////////////////// Read integers from a single line
         std::string s;
         std::getline( std::cin, s );
         std::istringstream is( s );
         std::vector<int> v( ( std::istream_iterator<int>( is ) ), std::istream_iterator<int>() );
         ///////////////////////////////////////////////////////////////////////////
-
 
         ////fill array with previously input values. i - counts the array elements
         int i = 0;
@@ -63,28 +65,23 @@ int main()
         }
         std::cout << std::endl;
         ///////////////////////////////////////////////////////////////////////////
-}
+
 
         std::cout << std::endl << "Enter 1 to continue. Enter any other character to exit." << std::endl;
         std::cin >> std::setw(3) >> repeatChar;
         repeat = (std::string(repeatChar) == "1");
         std::cout << std::endl;
 
+
+    }
+
     return 0;
 }
 
 /************
- *
  * Input number | Desired response Result                                                                              | Actual response
  * -------------+------------------------------------------------------------------------------------------------------+----------------------------------
- * 0            |0                                                                   |
- * -888         |Error: Not a natural number entered                                                                   |
- * ABC          |Error: Invalid input detected                                                                         |
- * 2147483699   |Error: Invalid input detected                                                                         |
- * 1            |-                                                                                                     |
- * 11122233     |Repeating number: 1; Occurences:3;Repeating number: 2; Occurences:3;Repeating number: 3; Occurences:2;|
- * 2147483647   |Repeating number: 4; Occurences:3;Repeating number: 7; Occurences:2;                                  |
- * 100          |Repeating number: 0; Occurences:2;                                                                    |
- * 00001        |-                                                                                                     |
- * 10000        |Repeating number: 0; Occurences:4;                                                                    |
- * ***********/
+ * 0            |0                                                                                                     |
+ * -1 4 3 -2    |-1 -2 3 4                                                                                             |
+ * 33 2         |2 33                                                                                                  |
+ ************/
