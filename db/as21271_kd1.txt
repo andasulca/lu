@@ -1,0 +1,149 @@
+CREATE TABLE IF NOT EXISTS public.carshops
+(
+    id serial,
+    name character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    address character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT carshops_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE IF NOT EXISTS public.cars
+(
+    id serial,
+    model character varying(300) COLLATE pg_catalog."default",
+    year numeric DEFAULT 2000,
+    "VIN" character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    carshop_id numeric,
+    CONSTRAINT cars_pkey PRIMARY KEY (id),
+    CONSTRAINT carshops_cars FOREIGN KEY (carshop_id)
+        REFERENCES public.carshops (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE IF NOT EXISTS public.manufacturers
+(
+    id serial,
+    name character varying(300) COLLATE pg_catalog."default",
+    address character varying(300) COLLATE pg_catalog."default",
+    "NMRcode" character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT manufacturers_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+CREATE TABLE IF NOT EXISTS public.carparts
+(
+    id numeric NOT NULL,
+    name character varying(300) COLLATE pg_catalog."default" NOT NULL,
+    manufactured_date date,
+    manufacturer_id numeric,
+    car_id numeric,
+    CONSTRAINT carparts_pkey PRIMARY KEY (id),
+    CONSTRAINT parts_cars FOREIGN KEY (car_id)
+        REFERENCES public.cars (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT parts_manufacturers FOREIGN KEY (manufacturer_id)
+        REFERENCES public.manufacturers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+
+INSERT INTO public.carshops(name, address)
+VALUES ('General Motors', 'Brivibas iela 111');
+INSERT INTO public.carshops(name, address)
+VALUES ('Forum Auto', 'Mārupes iela 99');
+INSERT INTO public.carshops(name, address)
+VALUES ('Audi center', 'Mežciema bulvāris 56');
+INSERT INTO public.carshops(name, address)
+VALUES ('Gerkens un co', 'Matīsa iela 12');
+
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (1, 'bmw series 3', 1990, '1FMSK8FH99GA12352', 1);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (2, 'ford f 150', 1991, '1FMSK8FH4LGA12352', 1);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (3, 'ford fiesta', 1992, 'JTJHY00W704075901', 1);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (4, 'kia ceed', 1993, '1C6RR6LG6JS132346', 2);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (5, 'audi 80', 1994, 'WDBWK73F45F047421', 2);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (6, 'audi 100', 1995, 'WAUZZZ8K6CA034530', 2);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (7, 'opel astra', 2010, 'WBAUJ71039LX91383', 3);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (8, 'opel vectra', 2009, '1XPHDP9X9ED239724', 3);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (9, 'toyota corolla', 2008, '1G1BE5SMXG7309122', 3);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (10, 'toyota prius', 2007, 'WDBNF83J35A456422', 4);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (11, 'bmw x5', 2006, '3GBJC34KX8M108325', 4);
+INSERT INTO public.cars(id, model, year, "VIN", carshop_id)
+VALUES (12, 'honda civic', 2005, '5N1AT3BB4MC763683', 4);
+
+INSERT INTO public.manufacturers(id, name, address, "NMRcode")
+VALUES (1, 'SIGMA Z', 'Jelgavas iela 1', '40103128828');
+INSERT INTO public.manufacturers(id, name, address, "NMRcode")
+VALUES (2, 'TĒRBATAS SĒTA', 'Rūjiena iela 2', '48503005860');
+INSERT INTO public.manufacturers(id, name, address, "NMRcode")
+VALUES (3, 'VILLA ELIZABETE', 'Cēsu iela 3', '40003694643');
+INSERT INTO public.manufacturers(id, name, address, "NMRcode")
+VALUES (4, 'PRIMA PICK SIA', 'Madonas iela 4', '44103086395');
+INSERT INTO public.manufacturers(id, name, address, "NMRcode")
+VALUES (5, 'GANESHAS SIA', 'Valmieras iela 6', '50103359291');
+
+INSERT INTO public.carparts
+VALUES (1, 'steering wheel', '2017-03-14', 1, 6);
+INSERT INTO public.carparts
+VALUES (2, 'tyres', '2018-03-19', 1, 7);
+INSERT INTO public.carparts
+VALUES (3, 'window', '2001-02-01', 3, 9);
+INSERT INTO public.carparts
+VALUES (4, 'engine', '2002-09-14', 4, 10);
+
+select * FROM public.carshops;
+select * FROM public.cars;
+select * FROM public.carparts;
+select * FROM public.manufacturers;
+
+select * from public.cars t
+where t.model like '%bmw%'
+and t.year > 2000
+order by t.year desc, t.model asc
+--select all cars which include 'bmw' in model name and year larger than 2000
+--ordered by year descending and model ascending
+
+UPDATE public.manufacturers
+SET name='Newly created SIA', address='Elizabetes iela 10'
+WHERE "NMRcode"='48503005860';
+--update name and address for the manufacturer
+-- that has corresponding NMRcode (48503005860)
+
+select * from public.manufacturers;
+
+DELETE FROM public.carparts;
+DELETE FROM public.manufacturers;
+DELETE FROM public.cars;
+DELETE FROM public.carshops;
+
+DROP TABLE IF EXISTS public.carparts;
+DROP TABLE IF EXISTS public.manufacturers;
+DROP TABLE IF EXISTS public.cars;
+DROP TABLE IF EXISTS public.carshops;
