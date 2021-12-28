@@ -1,0 +1,143 @@
+CREATE TABLE IF NOT EXISTS public.boxes
+(
+    box_id numeric NOT NULL,
+    doc_count numeric NOT NULL,
+    shelf_id numeric NOT NULL,
+    CONSTRAINT boxes_pkey PRIMARY KEY (box_id),
+    CONSTRAINT boxes_shelfs FOREIGN KEY (shelf_id)
+        REFERENCES public.shelfs (shelf_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.customers
+(
+    customer_id numeric NOT NULL,
+    customer_name character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT customers_pkey PRIMARY KEY (customer_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.deliveries
+(
+    delivery_id numeric NOT NULL,
+    delivery_date date NOT NULL,
+    adress character varying COLLATE pg_catalog."default" NOT NULL,
+    order_id numeric NOT NULL,
+    CONSTRAINT deliveries_pkey PRIMARY KEY (delivery_id),
+    CONSTRAINT deliveries_orders FOREIGN KEY (order_id)
+        REFERENCES public.orders (order_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.delivery_doc_content
+(
+    del_doc_id numeric NOT NULL,
+    delivery_id numeric NOT NULL,
+    document_id numeric NOT NULL,
+    CONSTRAINT delivery_doc_content_pkey PRIMARY KEY (del_doc_id),
+    CONSTRAINT delivery_doc_content_deliveries FOREIGN KEY (delivery_id)
+        REFERENCES public.deliveries (delivery_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT delivery_doc_content_documents FOREIGN KEY (document_id)
+        REFERENCES public.documents (document_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.destroyed_doc
+(
+    des_id numeric NOT NULL,
+    document_id numeric NOT NULL,
+    des_date date NOT NULL,
+    CONSTRAINT destroyed_doc_pkey PRIMARY KEY (des_id),
+    CONSTRAINT destroyed_doc_documents FOREIGN KEY (document_id)
+        REFERENCES public.documents (document_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.documents
+(
+    document_id numeric NOT NULL,
+    box_id numeric NOT NULL,
+    document_type character varying COLLATE pg_catalog."default",
+    issue_date date,
+    CONSTRAINT documents_pkey PRIMARY KEY (document_id),
+    CONSTRAINT documents_boxes FOREIGN KEY (box_id)
+        REFERENCES public.boxes (box_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.orders
+(
+    order_id numeric NOT NULL,
+    storage_date_from date NOT NULL,
+    storage_date_to date,
+    customer_id numeric NOT NULL,
+    CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+    CONSTRAINT orders_customer_id FOREIGN KEY (customer_id)
+        REFERENCES public.customers (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.payments
+(
+    payment_id numeric NOT NULL,
+    payment_date date NOT NULL,
+    order_id numeric NOT NULL,
+    total numeric NOT NULL,
+    customer_id numeric NOT NULL,
+    CONSTRAINT payments_pkey PRIMARY KEY (payment_id),
+    CONSTRAINT payments_order_id FOREIGN KEY (order_id)
+        REFERENCES public.orders (order_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+CREATE TABLE IF NOT EXISTS public.shelfs
+(
+    shelf_id numeric NOT NULL,
+    row_nr character varying COLLATE pg_catalog."default" NOT NULL,
+    room_nr character varying COLLATE pg_catalog."default" NOT NULL,
+    yield numeric NOT NULL,
+    CONSTRAINT shelfs_pkey PRIMARY KEY (shelf_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.user_role
+(
+    user_role_id numeric NOT NULL,
+    role_name character varying COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT user_role_pkey PRIMARY KEY (user_role_id)
+)
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    user_id numeric NOT NULL,
+    login character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    customer_id numeric,
+    user_role_id numeric NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (user_id),
+    CONSTRAINT users_customers FOREIGN KEY (customer_id)
+        REFERENCES public.customers (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT users_user_role FOREIGN KEY (user_role_id)
+        REFERENCES public.user_role (user_role_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
