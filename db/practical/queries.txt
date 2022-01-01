@@ -1,0 +1,110 @@
+create view public.ordersWithoutPayment
+as
+select o.* 
+from orders o
+where o.order_id not in (select order_id from payments);
+
+select * from public.ordersWithoutPayment;
+
+create view public.customersWithOrders
+as
+select c.*, counter as orderCount from customers c, (
+	select count(ord.customer_id) as counter, ord.customer_id
+	from documents docu, delivery_doc_content ddc, deliveries deliv, orders ord
+	where docu.document_id = ddc.document_id
+	and ddc.delivery_id = deliv.delivery_id
+	and deliv.order_id = ord.order_id
+	group by ord.customer_id) t
+where t.customer_id = c.customer_id;
+
+select * from public.customersWithOrders;
+
+create view public.AllPaymentsWithAveragePerCustomer
+as
+select 
+	p.payment_date, 
+	c.customer_name, 
+	total, 
+	avg (total) over (partition by customer_id)
+from customers c inner join payments p using (customer_id)
+order by c.customer_name, p.payment_date;
+
+select * from public.AllPaymentsWithAveragePerCustomer;
+
+create view public.customersPerYear
+as
+select c.*, sum(p.total) as summa, to_char(date_trunc('year', payment_date), 'YYYY') as year
+from customers c, payments p
+where p.customer_id = c.customer_id
+group by c.customer_id, c.customer_name, date_trunc('year', payment_date)
+order by c.customer_id, year;
+
+select * from public.customersPerYear;
+
+create view public.deliveriesWithAverages
+as
+select c.customer_name, 
+		count(delivery_date), 
+		delivery_date, 
+		avg (count(delivery_date)) over (partition by c.customer_id)
+from deliveries d, orders o, customers c
+where d.order_id = o.order_id
+and o.customer_id = c.customer_id
+group by delivery_Date, c.customer_id, c.customer_name;
+
+select * from public.deliveriesWithAverages;
+
+create or replace view public.freeSpacesInBoxes
+as
+select * from (
+	select b.*, b.doc_count-t.counter as freeSpace from (
+		select count(box_id) as counter, box_id
+		from documents
+		group by box_id
+		) t, boxes b
+	where counter > 0
+	and b.box_id = t.box_id
+	and b.doc_count > counter
+	union
+	select b.*, b.doc_count as freeSpace
+	from boxes b
+	where b.box_id not in
+	(select box_id
+		from documents
+	 	where box_id is not null
+		group by box_id
+		)
+) r
+order by r.box_id;
+
+select * from public.freeSpacesInBoxes;
+
+create view public.freeSpacesInShelfs
+as
+select * from (
+	select s.*, s.yield - t.counter as freeSpaces from (
+		select count(shelf_id) as counter, shelf_id
+		from boxes
+		group by shelf_id) t, shelfs s
+	where s.shelf_id = t.shelf_id
+	and s.yield - t.counter > 0
+	union
+	select s.*, s.yield as freeSpaces from shelfs s
+	where s.shelf_id not in (
+		select shelf_id
+		from boxes
+		group by shelf_id)
+	) r
+order by r.shelf_id;
+
+select * from public.freeSpacesInShelfs;
+
+create view public.destroyedPerType
+as
+select document_type, count(document_type) as count
+from documents d, destroyed_doc dd
+where dd.document_id = d.document_id
+group by d.document_type;
+
+select * from public.destroyedPerType;
+
