@@ -3,14 +3,14 @@ CREATE TABLE IF NOT EXISTS public.user_role
     user_role_id numeric NOT NULL,
     role_name character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT user_role_pkey PRIMARY KEY (user_role_id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.customers
 (
     customer_id numeric NOT NULL,
     customer_name character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT customers_pkey PRIMARY KEY (customer_id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.users
 (
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS public.users
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.orders
 (
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS public.orders
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.payments
 (
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS public.payments
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.deliveries
 (
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS public.deliveries
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.shelfs
 (
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS public.shelfs
     room_nr character varying COLLATE pg_catalog."default" NOT NULL,
     yield numeric NOT NULL,
     CONSTRAINT shelfs_pkey PRIMARY KEY (shelf_id)
-)
+);
 
 
 CREATE TABLE IF NOT EXISTS public.boxes
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS public.boxes
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.documents
 (
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS public.documents
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.delivery_doc_content
 (
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS public.delivery_doc_content
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 CREATE TABLE IF NOT EXISTS public.destroyed_doc
 (
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS public.destroyed_doc
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID
-)
+);
 
 
 
