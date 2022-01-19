@@ -1,0 +1,57 @@
+CREATE TABLE IF NOT EXISTS public.countries
+(
+    id numeric NOT NULL,
+    name character varying COLLATE pg_catalog."default",
+    code character varying(3) COLLATE pg_catalog."default",
+    population numeric,
+    CONSTRAINT countries_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.variants
+(
+    id numeric NOT NULL,
+    scientific_name character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    short_name character varying(20) COLLATE pg_catalog."default",
+    discovered date,
+    symptoms character varying COLLATE pg_catalog."default",
+    CONSTRAINT variants_pkey PRIMARY KEY (id),
+    CONSTRAINT scientific_unique UNIQUE (scientific_name)
+);
+
+CREATE TABLE IF NOT EXISTS public.discoveries
+(
+    id numeric NOT NULL,
+    country_id numeric,
+    variant_id numeric,
+    discovered date,
+    CONSTRAINT discoveries_pkey PRIMARY KEY (id),
+    CONSTRAINT discoveries_country_id_variant_id_key UNIQUE (country_id, variant_id),
+    CONSTRAINT country_discovery FOREIGN KEY (country_id)
+        REFERENCES public.countries (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT variant_discovery FOREIGN KEY (variant_id)
+        REFERENCES public.variants (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+
+select
+(select name from public.countries c where c.id = fullinfo.country_id) as country_name,
+(select scientific_name from public.variants v where v.id = fullinfo.variant_id) as variant_name,
+fullinfo.min_date as date_discovered
+from
+(select 
+d.country_id as country_id, 
+min(d.variant_id) as variant_id,
+d2.min_date as min_date
+from
+(select country_id, min(discovered) as min_date
+from public.discoveries
+group by country_id) d2, public.discoveries d
+where d.country_id = d2.country_id
+and d.discovered = d2.min_date
+group by d.country_id, d2.min_date) fullinfo;

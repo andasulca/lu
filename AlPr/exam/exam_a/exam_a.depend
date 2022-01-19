@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1642231737 source:c:\users\anda.sulca\documents\lu\alpr\exam\exam_a\main.cpp
+	<iostream>
+	<sstream>
+	<iterator>
+	<string>
+	<vector>
+	<iomanip>
+

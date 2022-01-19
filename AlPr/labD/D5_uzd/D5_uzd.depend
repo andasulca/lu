@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1642235351 source:c:\users\anda.sulca\documents\lu\alpr\labd\d5_uzd\main.cpp
+	<iostream>
+	<bankAccount.h>
+
+1642237011 c:\users\anda.sulca\documents\lu\alpr\labd\d5_uzd\include\bankaccount.h
+
+1642236364 source:c:\users\anda.sulca\documents\lu\alpr\labd\d5_uzd\src\bankaccount.cpp
+	"bankAccount.h"
+	<iostream>
+

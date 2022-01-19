@@ -19,4 +19,3 @@ class bankAccount
         double interest;
 };
 
-
