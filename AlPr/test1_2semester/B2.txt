@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+struct elem {int num; elem *next;};
+
+void deleteSecond2xNotEqual(elem *node) {
+    elem *prev;
+    elem *current;
+    elem *first;
+    elem *scnd;
+    elem *prevPrevToLast;
+    elem *prevToLast;
+    elem *last;
+
+    if (node->next == NULL) return;
+    first = node;
+    scnd = node->next;
+    prevToLast = node;
+    prevPrevToLast = NULL;
+    current = node->next;
+    while (current->next != NULL) {
+        prevPrevToLast = prevToLast;
+        prevToLast = current;
+        current = current->next;
+    }
+    last = current;
+    if (scnd->num != prevToLast->num) {
+        first->next = scnd->next;
+        delete scnd;
+        if (prevPrevToLast != NULL) {
+            prevPrevToLast->next = last;
+        }
+        delete prevToLast;
+    }
+}

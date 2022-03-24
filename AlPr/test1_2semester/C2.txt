@@ -1,0 +1,42 @@
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+void deleteSecond2xNotEqual(std::list<int> l) {
+
+    int scnd;
+    int prevToLast;
+    int scndIndex;
+    int prevToLastIndex;
+
+    if(l.size() <= 1) return;
+
+    int counter = 1;
+    for (std::list<int>::iterator it = l.begin(); it != l.end(); ) {
+        if (*it == 1) {
+            scnd = *it;
+            scndIndex = counter;
+        }
+        if (*it == l.size() - 1) {
+            prevToLast = *it;
+            prevToLastIndex = counter;
+        }
+        ++it;
+        counter++;
+    }
+    
+    if (scnd != prevToLast)  {
+        int counter = 1;
+        for (std::list<int>::iterator it = l.begin(); it != l.end(); ) {
+            if (*it == scndIndex) {
+                it = l.erase(it);
+            } else if (*it == prevToLastIndex) {
+                it = l.erase(it);
+            } else {
+                ++it;
+            }
+            counter++;
+        }
+    }
+}

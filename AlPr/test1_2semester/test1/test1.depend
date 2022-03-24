@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1648058351 source:c:\users\anda.sulca\documents\lu\alpr\test1_2semester\test1\main.cpp
+	<fstream>
+	<iostream>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+
