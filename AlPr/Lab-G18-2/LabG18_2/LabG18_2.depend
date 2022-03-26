@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1648312257 source:c:\users\anda.sulca\documents\lu\alpr\lab-g18-2\labg18_2\main.cpp
+	<algorithm>
+	<iostream>
+	<list>
+	<iostream>
+	<sstream>
+	<iterator>
+	<string>
+	<vector>
+	<iomanip>
+
