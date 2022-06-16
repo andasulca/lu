@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1654533683 source:c:\users\anda.sulca\documents\lu\alpr\exam3\exam3\main.cpp
+	<algorithm>
+	<iostream>
+	<list>
+	<map>
+

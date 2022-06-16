@@ -1,0 +1,11 @@
+Vectors used when you don't know size of container.
+In C++ vectors, automatic reallocation happens whenever the total amount of memory is used.
+Insertation in the end is fast.
+Vectors might consume more memory then an array. Insertation in not the end is slower then in the end.
+Resizing before adding new member doubles the temporarily, as the previous vector buffer must held until
+copied from.
+Vectors are good for caching the data.
+Mmap allows fast access to the value using the key.
+This property is useful when building any kind of index or reference.
+Second, the map ensures that a key is unique across the entire data structure,
+which is an excellent technique for avoiding duplication of data.
